@@ -1,25 +1,38 @@
+
+"use client";
+
+import { useState } from "react";
+
 const venues = [
   {
-    name: "Urban Futsal Arena",
+    name: "Dhuku Sports Hub",
     location: "Kathmandu, Nepal",
-    price: "Rs. 1,500 / hour",
+    price: "Rs. 1,800 / hour",
     tag: "Popular",
   },
   {
-    name: "Greenfield Futsal",
-    location: "Bhaktapur, Nepal",
-    price: "Rs. 1,200 / hour",
-    tag: "Top rated",
+    name: "Bhaktapur Futsal",
+    location: "Suryabinayak, Bhaktapur",
+    price: "Rs. 2,000 / hour",
+    tag: "Local venue",
   },
   {
-    name: "Champions Court",
-    location: "Lalitpur, Nepal",
-    price: "Rs. 1,000 / hour",
-    tag: "Affordable",
+    name: "Pulchowk Sports Hub",
+    location: "Pulchowk, Lalitpur",
+    price: "From Rs. 1,500 / hour",
+    tag: "Explore",
   },
 ];
 
 export default function Home() {
+  const [search, setSearch] = useState("");
+
+  const filteredVenues = venues.filter(
+    (venue) =>
+      venue.name.toLowerCase().includes(search.toLowerCase()) ||
+      venue.location.toLowerCase().includes(search.toLowerCase())
+  );
+
   return (
     <main className="min-h-screen bg-[#f7f8f5] text-[#17251c]">
       <nav className="flex items-center justify-between border-b border-gray-200 bg-white px-6 py-5 md:px-16">
@@ -39,9 +52,12 @@ export default function Home() {
           </a>
         </div>
 
-        <button className="rounded-full bg-green-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-800">
+        <a
+          href="#venues"
+          className="rounded-full bg-green-700 px-5 py-3 text-sm font-semibold text-white transition hover:bg-green-800"
+        >
           Get started
-        </button>
+        </a>
       </nav>
 
       <section
@@ -54,8 +70,8 @@ export default function Home() {
           </p>
 
           <h1 className="text-5xl font-black leading-tight tracking-tight md:text-7xl">
-            Find your court.
-            <span className="block text-green-700">Own the game.</span>
+            Find your next
+            <span className="block text-green-700">futsal match.</span>
           </h1>
 
           <p className="mt-6 max-w-lg text-lg leading-8 text-gray-600">
@@ -125,20 +141,41 @@ export default function Home() {
                 Explore futsal venues
               </h2>
               <p className="mt-3 text-gray-600">
-                A first look at the courts we'll feature on FutsalHub.
+                Find a court for your next game.
               </p>
             </div>
             <span className="text-sm text-gray-500">Kathmandu Valley</span>
           </div>
 
+          <div className="mt-8">
+            <input
+              type="search"
+              aria-label="Search futsal venues"
+              placeholder="Search by venue or location..."
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              className="w-full rounded-xl border border-gray-300 bg-white px-5 py-4 outline-none transition focus:border-green-600 focus:ring-2 focus:ring-green-100"
+            />
+          </div>
+
           <div className="mt-10 grid gap-6 md:grid-cols-3">
-            {venues.map((venue) => (
+            {filteredVenues.map((venue) => (
               <article
                 key={venue.name}
                 className="rounded-2xl border border-gray-200 p-6 transition hover:-translate-y-1 hover:shadow-lg"
               >
-                <div className="flex h-36 items-center justify-center rounded-xl bg-gradient-to-br from-green-800 to-green-500">
-                  <span className="text-6xl">⚽</span>
+                <div className="h-44 overflow-hidden rounded-xl">
+                  <img
+                    src={
+                      venue.name === "Dhuku Sports Hub"
+                        ? "/venues/1.jpg"
+                        : venue.name === "Bhaktapur Futsal"
+                          ? "/venues/2.jpg"
+                          : "/venues/3.jpg"
+                    }
+                    alt={venue.name}
+                    className="h-full w-full object-cover transition duration-300 hover:scale-105"
+                  />
                 </div>
 
                 <div className="mt-5 flex items-center justify-between gap-2">
@@ -154,7 +191,10 @@ export default function Home() {
 
                 <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
                   <span className="text-sm font-bold">{venue.price}</span>
-                  <button className="rounded-full border border-green-700 px-4 py-2 text-sm font-semibold text-green-800 transition hover:bg-green-700 hover:text-white">
+                  <button
+                    type="button"
+                    className="rounded-full border border-green-700 px-4 py-2 text-sm font-semibold text-green-800 transition hover:bg-green-700 hover:text-white"
+                  >
                     View details
                   </button>
                 </div>
@@ -162,9 +202,15 @@ export default function Home() {
             ))}
           </div>
 
+          {filteredVenues.length === 0 && (
+            <p className="mt-8 text-center text-gray-500">
+              No venues found. Try another name or location.
+            </p>
+          )}
+
           <p className="mt-6 text-sm text-gray-500">
-            Note: these are sample listings for the design preview, not verified
-            venues or live prices.
+            Note: venue details and prices are sample listings for the design
+            preview and should be verified before use.
           </p>
         </div>
       </section>
