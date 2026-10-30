@@ -1,26 +1,9 @@
 @import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+:root { --ink:#1f2933; --panel:#4f5861; --bar:#c9d1dc; --paper:#f4f6f9; }
+body { background:var(--paper); color:var(--ink); font-family: "Segoe UI", system-ui, sans-serif; }
+.slot-free { background:linear-gradient(135deg,#38bdf8,#2563eb); color:#fff; }
+.slot-booked { background:linear-gradient(135deg,#fb7185,#dc2626); color:#fff; }
+.btn { background:#1e3a5f; color:#fff; padding:.5rem 1rem; border-radius:.5rem; font-weight:600; }
+.btn:hover { background:#274b7a; }
+.input { width:100%; border:1px solid #aab4c3; border-radius:.5rem; padding:.5rem .75rem; background:#fff; }
+:focus-visible { outline:2px solid #2563eb; outline-offset:2px; }
